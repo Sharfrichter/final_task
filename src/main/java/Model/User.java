@@ -1,11 +1,21 @@
 package Model;
 
+import Annotations.Column;
+import Annotations.Table;
+
+@Table(name = "users")
 public class User {
+    @Column(name = "id")
     private int id;
+    @Column(name="login")
     private String login;
+    @Column(name="password")
     private String password;
+    @Column(name="first_name")
     private String firstName;
+    @Column(name="last_name")
     private String lastName;
+    @Column(name="role_id")
     private int roleId;
 
     public User(int id, String login, String password, String firstName, String lastName,int roleId) {
