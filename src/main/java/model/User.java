@@ -1,7 +1,7 @@
-package Model;
+package model;
 
-import Annotations.Column;
-import Annotations.Table;
+import annotations.Column;
+import annotations.Table;
 
 @Table(name = "users")
 public class User {

@@ -1,57 +1,61 @@
-package DAO;
+package DAO.impl;
 
 import ConnectionPool.ConnectionPool;
-import Model.User;
+import DAO.EntityDao;
+import DAO.UserDao;
+import model.User;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class UserDAO implements EntityDAO<User, Integer> {
-    private Connection connection;
+public class UserDaoImpl implements UserDao {
 
-    public UserDAO() {
-        connection = null;
-    }
+
+
 
     @Override
     public List<User> findAll() {
-        List<User> users = new ArrayList<>();
-        while (connection == null) {
-            connection = ConnectionPool.INSTANCE.getAvailableConnection();
-        }
-        try (Statement statement = connection.createStatement()) {
-            statement.execute("SELECT * FROM users");
-            ResultSet resultSet = statement.getResultSet();
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String login = resultSet.getString("login");
-                String password = resultSet.getString("password");
-                String firstName = resultSet.getString("first_name");
-                String lastName = resultSet.getString("last_name");
-                int roleId = resultSet.getInt("role_id");
-                users.add(new User(id, login, password, firstName, lastName,roleId));
-
-            }
-            connection.close();
-            connection = null;
-        } catch (SQLException throwables) {
-            //todo
+        if(ConnectionPool.INSTANCE.getAvailableConnections().size()==0){
             try {
-                connection.close();
-            } catch (SQLException e) {
+                System.out.println("not available connections waiting...");
+                Thread.sleep(5000);
+                return this.findAll();
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            connection = null;
-            throwables.printStackTrace();
+        }else {
+            try(Connection connection=ConnectionPool.INSTANCE.getAvailableConnection()) {
+                StatementCreator<User,Integer> creator = new StatementCreator<>();
+              return  creator.findAll(User.class, connection);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
-        return users;
+        return null;
     }
 
     @Override
     public User findById(Integer id) {
-        User user=null;
+        if(ConnectionPool.INSTANCE.getAvailableConnections().size()==0){
+            try {
+                System.out.println("not available connections waiting...");
+                Thread.sleep(5000);
+                return this.findById(id);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }else {
+            try(Connection connection=ConnectionPool.INSTANCE.getAvailableConnection()) {
+                StatementCreator<User,Integer> creator = new StatementCreator<>();
+                return  creator.findById(User.class, connection,id);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        return null;
+        /*User user=null;
         while (connection == null) {
             connection = ConnectionPool.INSTANCE.getAvailableConnection();
         }
@@ -79,13 +83,13 @@ public class UserDAO implements EntityDAO<User, Integer> {
             throwables.printStackTrace();
         }
 
-        return user;
+        return user;*/
     }
 
 
     @Override
     public User update(User user) {
-        while (connection == null) {
+        /*while (connection == null) {
             connection = ConnectionPool.INSTANCE.getAvailableConnection();
 
         }
@@ -110,12 +114,13 @@ public class UserDAO implements EntityDAO<User, Integer> {
             connection = null;
             throwables.printStackTrace();
         }
-        return user;
+        return user;*/
+        return null;
     }
 
     @Override
     public void create(User user) {
-        while (connection == null) {
+        /*while (connection == null) {
             connection = ConnectionPool.INSTANCE.getAvailableConnection();
 
         }
@@ -138,30 +143,27 @@ public class UserDAO implements EntityDAO<User, Integer> {
             }
             connection = null;
             throwables.printStackTrace();
-        }
+        }*/
+
     }
 
     @Override
     public void delete(Integer id) {
-        while (connection == null) {
-            connection = ConnectionPool.INSTANCE.getAvailableConnection();
-
-        }
-        try (PreparedStatement statement = connection.prepareStatement(
-                "DELETE FROM USERS WHERE id=?")) {
-            statement.setInt(1, id);
-            statement.executeUpdate();
-            connection.close();
-            connection = null;
-
-        } catch (SQLException throwables) {
+        if(ConnectionPool.INSTANCE.getAvailableConnections().size()==0){
             try {
-                connection.close();
-            } catch (SQLException e) {
+                System.out.println("not available connections waiting...");
+                Thread.sleep(5000);
+                delete(id);
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            connection = null;
-            throwables.printStackTrace();
+        }else {
+            try(Connection connection=ConnectionPool.INSTANCE.getAvailableConnection()) {
+                StatementCreator<User,Integer> creator = new StatementCreator<>();
+                creator.delete(User.class, connection,id);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
     }
 }

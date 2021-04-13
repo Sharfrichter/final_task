@@ -1,4 +1,6 @@
-package ConnectionPool;
+package proxy;
+
+import ConnectionPool.ConnectionPool;
 
 import java.sql.*;
 import java.util.Map;

@@ -1,6 +1,6 @@
-package Model;
+package model;
 
-import Annotations.Table;
+import annotations.Table;
 
 @Table(name = "drugs")
 public class Drug {
