@@ -14,7 +14,7 @@ import java.util.List;
 
 public class StatementCreator<T,I> {
 
-    //++
+
     public List<T> findAll(Class<T> t, Connection connection) {
         StringBuilder sql = new StringBuilder();
         List<T> list = new ArrayList<>();
@@ -50,7 +50,7 @@ public class StatementCreator<T,I> {
         return list;
     }
 
-    //++
+
     public T findById(Class<T> t,Connection connection,I id){
         Object object = null;
         StringBuilder sql = new StringBuilder();
@@ -87,7 +87,7 @@ public class StatementCreator<T,I> {
         return (T) object;
     }
 
-    //++
+
     public void delete(Class<T> t,Connection connection,I id){
         StringBuilder sql = new StringBuilder();
         sql.append("DELETE FROM ");
@@ -101,7 +101,7 @@ public class StatementCreator<T,I> {
     }
 
 
-    //++
+
     public void create(T t,Connection connection){
         StringBuilder sql = new StringBuilder();
         Field[] fields = t.getClass().getDeclaredFields();
@@ -151,7 +151,7 @@ public class StatementCreator<T,I> {
     }
 
 
-    //prepared statement
+
     public T update(T t,Connection connection){
         StringBuilder sql = new StringBuilder();
         Field[] fields = t.getClass().getDeclaredFields();
@@ -170,17 +170,25 @@ public class StatementCreator<T,I> {
                 }
             }
         }
+        sql.append(" WHERE id=?");
         try(StatementProxy statement=new StatementProxy(connection.prepareStatement(sql.toString()))) {
             int counter=1;
+            Integer id=0;
             for(int i=0;i<fields.length;i++){
                 if(!fields[i].getAnnotation(Column.class).name().equals("id")){
                     fields[i].setAccessible(true);
                     statement.setValue(counter,fields[i].get(t));
                     fields[i].setAccessible(false);
                     counter++;
+                }else {
+                    fields[i].setAccessible(true);
+                    id= (Integer) fields[i].get(t);
+                    fields[i].setAccessible(false);
+
                 }
 
             }
+                statement.setValue(counter,id);
             statement.executeUpdate();
 
         } catch (SQLException | IllegalAccessException throwables) {

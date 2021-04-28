@@ -10,10 +10,11 @@ import java.util.List;
 
 public enum ConnectionPool {
     INSTANCE;
-    //todo
+    //todo in properties
     private static final String url = "jdbc:mysql://localhost:3306/jwd?serverTimezone=Europe/Moscow"; //change for reading from properties
     private static final String username = "root";
     private static final String password = "root";
+
     private final List<Connection> availableConnections;
     private List<Connection> notAvailableConnections;
    // boolean isAvailable=true;
