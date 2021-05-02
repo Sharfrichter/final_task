@@ -10,6 +10,14 @@ import java.util.concurrent.Executor;
 public class ConnectionProxy implements Connection {
     Connection connection;
 
+    public void kill(){
+        try {
+            connection.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
     public ConnectionProxy(Connection connection) {
         this.connection = connection;
     }

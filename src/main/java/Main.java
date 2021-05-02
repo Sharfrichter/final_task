@@ -12,10 +12,16 @@ import java.lang.reflect.Proxy;
 
 public class Main {
     public static void main(String[] args) {
-        ApplicationContext context = ApplicationContext.INSTANCE;
-        User user = new User(2, "alex1", "alex2", "alex3", "alex4", 2);
-        context.getUserDao().delete(2);
-        /*ConnectionPool.INSTANCE.init(3);
+        ApplicationContext context=ApplicationContext.INSTANCE;
+        context.getUserDao().findAll().forEach(System.out::println);
+//        User user = new User(2, "alex1", "alex2", "alex3", "alex4", 2);
+//        context.getUserDao().delete(2);
+
+
+
+
+
+        /*
         *//*UserDAO userDAO = new UserDAO();
 
         User user1 = new User(5, "alex", "223231", "Alex", "Nevski", 1);
@@ -35,4 +41,6 @@ public class Main {
         proxyUserDao.findAll().forEach(System.out::println);*/
 
     }
+
+    
 }
