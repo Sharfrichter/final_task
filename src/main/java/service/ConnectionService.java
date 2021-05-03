@@ -1,6 +1,6 @@
 package service;
 
-import ConnectionPool.ConnectionPool;
+import DAO.ConnectionPool;
 
 import java.sql.Connection;
 

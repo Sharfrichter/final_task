@@ -25,11 +25,13 @@ public class AuthorizationCommand implements Command {
             User curUser=users.stream().filter(user -> login.equals(user.getLogin())).findFirst().get();
             if(!curUser.getPassword().equals(password)){
                 request.setAttribute("message","Неверный пароль");
-                request.getRequestDispatcher("/").forward(request, response);
+                request.getRequestDispatcher("?command=main_page").forward(request, response);
+            }else {
+                response.getWriter().write("AAAAAAAA");
             }
         }catch (NoSuchElementException exception){
             request.setAttribute("message","Неверный логин");
-            request.getRequestDispatcher("/").forward(request, response);
+            request.getRequestDispatcher("?command=main_page").forward(request, response);
         }
 
 

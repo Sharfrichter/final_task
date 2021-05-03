@@ -1,4 +1,4 @@
-package controler;
+package controller;
 
 import command.Command;
 import command.enums.CommandInstance;
@@ -14,8 +14,6 @@ import java.io.IOException;
 public class Controller extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        /*RequestDispatcher view = req.getRequestDispatcher("main_page.jsp");
-        view.forward(req,resp);*/
         String commandName = req.getParameter("command");
         Command command = CommandInstance.commandOf(commandName);
         command.execute(req,resp);
@@ -29,9 +27,5 @@ public class Controller extends HttpServlet {
         String commandName=req.getParameter("command");
         Command command = CommandInstance.commandOf(commandName);
         command.execute(req,resp);
-//        resp.setContentType("text/html");
-//        PrintWriter writer = resp.getWriter();
-//        writer.write(login+" "+password);
-//        writer.close();
     }
 }

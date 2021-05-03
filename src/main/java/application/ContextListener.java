@@ -1,8 +1,6 @@
 package application;
 
 
-import ConnectionPool.ConnectionPool;
-
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;

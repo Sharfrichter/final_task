@@ -1,6 +1,6 @@
 package proxy;
 
-import ConnectionPool.ConnectionPool;
+import DAO.ConnectionPool;
 
 import java.sql.*;
 import java.util.Map;
@@ -12,7 +12,7 @@ public class ConnectionProxy implements Connection {
 
     public void kill(){
         try {
-            connection.close();
+            this.connection.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

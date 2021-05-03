@@ -1,21 +1,12 @@
-import DAO.EntityDao;
-import DAO.UserDao;
-import DAO.impl.StatementCreator;
-import DAO.impl.UserDaoImpl;
-import ConnectionPool.ConnectionPool;
 import application.ApplicationContext;
-import model.User;
-import proxy.DaoInvocationHandler;
-
-import java.beans.Statement;
-import java.lang.reflect.Proxy;
+import model.Drug;
 
 public class Main {
     public static void main(String[] args) {
         ApplicationContext context=ApplicationContext.INSTANCE;
-        context.getUserDao().findAll().forEach(System.out::println);
-//        User user = new User(2, "alex1", "alex2", "alex3", "alex4", 2);
-//        context.getUserDao().delete(2);
+        Drug drug = new Drug(1,"drug11", 15.9, false, 150, false);
+        context.getDrugDao().update(drug);
+
 
 
 

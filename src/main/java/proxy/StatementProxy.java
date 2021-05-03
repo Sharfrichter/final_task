@@ -19,7 +19,14 @@ public class StatementProxy implements PreparedStatement {
             statement.setInt(parameterIndex,(Integer)x);
         }else if(x.getClass().equals(String.class)){
             statement.setString(parameterIndex,x.toString());
+        }else if(x.getClass().equals(Boolean.class)){
+            statement.setBoolean(parameterIndex, (Boolean) x);
+        }else if(x.getClass().equals(Double.class)){
+            statement.setDouble(parameterIndex, (Double) x);
+        }else{
+            statement.setObject(parameterIndex,x);
         }
+
     }
 
     @Override

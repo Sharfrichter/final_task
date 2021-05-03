@@ -1,7 +1,7 @@
 package proxy;
 
-import ConnectionPool.ConnectionPool;
-import DAO.impl.StatementCreator;
+import DAO.ConnectionPool;
+import DAO.StatementCreator;
 
 
 import java.lang.reflect.InvocationHandler;

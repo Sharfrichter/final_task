@@ -1,4 +1,4 @@
-package DAO.impl;
+package DAO;
 
 import DAO.EntityDao;
 import annotations.Column;
@@ -38,6 +38,10 @@ public class StatementCreator<T,I> {
                         field.set(object, resultSet.getInt(field.getAnnotation(Column.class).name()));
                     } else if (field.getType().equals(String.class)) {
                         field.set(object, resultSet.getString(field.getAnnotation(Column.class).name()));
+                    } else if(field.getType().equals(Double.class)){
+                        field.set(object,resultSet.getDouble(field.getAnnotation(Column.class).name()));
+                    } else if(field.getType().equals(Boolean.class)){
+                        field.set(object,resultSet.getBoolean(field.getAnnotation(Column.class).name()));
                     }
                     field.setAccessible(false);
                 }
@@ -74,6 +78,10 @@ public class StatementCreator<T,I> {
                         field.set(object, resultSet.getInt(field.getAnnotation(Column.class).name()));
                     } else if (field.getType().equals(String.class)) {
                         field.set(object, resultSet.getString(field.getAnnotation(Column.class).name()));
+                    }else if(field.getType().equals(Double.class)){
+                        field.set(object,resultSet.getDouble(field.getAnnotation(Column.class).name()));
+                    } else if(field.getType().equals(Boolean.class)){
+                        field.set(object,resultSet.getBoolean(field.getAnnotation(Column.class).name()));
                     }
                     field.setAccessible(false);
                 }
@@ -135,7 +143,15 @@ public class StatementCreator<T,I> {
 
                 }else {
                     fields[i].setAccessible(true);
-                    statement.setString(counter,fields[i].get(t).toString());
+                    if(fields[i].getType().equals(Integer.class)){
+                        statement.setInt(counter, (Integer) fields[i].get(t));
+                    } else if (fields[i].getType().equals(String.class)) {
+                        statement.setString(counter,fields[i].get(t).toString());
+                    }else if(fields[i].getType().equals(Double.class)){
+                        statement.setDouble(counter, (Double) fields[i].get(t));
+                    }else if(fields[i].getType().equals(Boolean.class)){
+                        statement.setBoolean(counter, (Boolean) fields[i].get(t));
+                    }
                     fields[i].setAccessible(false);
                     counter++;
 

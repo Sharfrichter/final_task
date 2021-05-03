@@ -1,4 +1,4 @@
-package ConnectionPool;
+package DAO;
 
 import proxy.ConnectionProxy;
 
